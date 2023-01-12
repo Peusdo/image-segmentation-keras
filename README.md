@@ -1,4 +1,4 @@
-I just add a return on the train function to allow creating accuracy graphs the following way :
+I just added a return on the train function to allow creating accuracy graphs the following way :
 
 
 # Image Segmentation Keras : Implementation of Segnet, FCN, UNet, PSPNet and other models in Keras.
