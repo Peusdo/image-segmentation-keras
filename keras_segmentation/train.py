@@ -42,9 +42,9 @@ def find_latest_checkpoint(checkpoints_path, fail_safe=True):
     return latest_epoch_checkpoint
 
 def masked_categorical_crossentropy(gt, pr):
-    from keras.losses import categorical_crossentropy
+    from keras.losses import is_categorical_crossentropy, binary_crossentropy
     mask = 1 - gt[:, :, 0]
-    return categorical_crossentropy(gt, pr) * mask
+    return binary_crossentropy(gt, pr) * mask
 
 
 class CheckpointsCallback(Callback):
