@@ -48,17 +48,17 @@ def get_image_list_from_path(images_path ):
     return images_path
 
 
-def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=False, other_inputs_paths=None):
+def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=True, other_inputs_paths=None):
     """ Find all the images from the images_path directory and
         the segmentation images from the segs_path directory
         while checking integrity of data """
 
 
 
-    image_files = []
-    segmentation_files = {}
+    image_files = images_path
+    segmentation_files = segs_path
 
-    for dir_entry in os.listdir(images_path):
+    """for dir_entry in os.listdir(images_path):
         if os.path.isfile(os.path.join(images_path, dir_entry)) and \
                 os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
             file_name, file_extension = os.path.splitext(dir_entry)
@@ -93,11 +93,11 @@ def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=False, othe
                                       " Please remove or rename the latter."
                                       .format(file_name, full_dir_entry))
 
-            segmentation_files[file_name] = (file_extension, full_dir_entry)
+            segmentation_files[file_name] = (file_extension, full_dir_entry)"""
 
     return_value = []
     # Match the images and segmentations
-    for image_file, _, image_full_path in image_files:
+    """for image_file, _, image_full_path in image_files:
         if image_file in segmentation_files:          
             return_value.append((image_full_path,
                                      segmentation_files[image_file][1]))
@@ -107,9 +107,9 @@ def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=False, othe
             # Error out
             raise DataLoaderError("No corresponding segmentation "
                                   "found for image {0}."
-                                  .format(image_full_path))
+                                  .format(image_full_path))"""
 
-    return 1
+    return return_value
 
 
 def get_image_array(image_input,
