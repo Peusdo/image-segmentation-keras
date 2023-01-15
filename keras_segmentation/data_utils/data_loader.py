@@ -43,7 +43,7 @@ def get_image_list_from_path(images_path ):
    for i in images_path:
     images_files[i] = np.array(images_path[i])
 
-    return images_path
+    return images_files
 
 
 def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=True, other_inputs_paths=None):
