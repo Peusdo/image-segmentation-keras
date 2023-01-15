@@ -39,7 +39,9 @@ class DataLoaderError(Exception):
 
 
 def get_image_list_from_path(images_path ):
-   # image_files = []
+   images_files = []
+   for i in images_path:
+    images_files[i] = images_path[i]
    # for dir_entry in os.listdir(images_path):
    #         if os.path.isfile(os.path.join(images_path, dir_entry)) and \
    #                 os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
@@ -184,7 +186,7 @@ def image_segmentation_generator(images_path, segs_path, batch_size,
                                  augmentation_name="aug_all",
                                  custom_augmentation=None,
                                  other_inputs_paths=None, preprocessing=None,
-                                 read_image_type=cv2.IMREAD_COLOR , ignore_segs=False ):
+                                 read_image_type=cv2.IMREAD_COLOR , ignore_segs=True ):
     
 
     if not ignore_segs:
