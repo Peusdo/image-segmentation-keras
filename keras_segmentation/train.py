@@ -9,6 +9,7 @@ from keras.callbacks import ModelCheckpoint
 import tensorflow as tf
 import glob
 import sys
+import keras as K
 
 def find_latest_checkpoint(checkpoints_path, fail_safe=True):
 
