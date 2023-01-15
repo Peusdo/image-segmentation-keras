@@ -60,9 +60,9 @@ def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=False, othe
 
     return_value = []
     # Match the images and segmentations
-    for image_file, _, image_full_path in image_files:
+    for image_file, _ in image_files:
         if image_file in segmentation_files:          
-            return_value.append((image_full_path,
+            return_value.append((image_file,
                                      segmentation_files[image_file][1]))
         elif ignore_non_matching:
             continue
@@ -70,7 +70,7 @@ def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=False, othe
             # Error out
             raise DataLoaderError("No corresponding segmentation "
                                   "found for image {0}."
-                                  .format(image_full_path))
+                                  .format(image_file))
 
     return return_value
 
