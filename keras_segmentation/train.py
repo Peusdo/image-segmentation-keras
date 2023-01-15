@@ -55,7 +55,16 @@ class CheckpointsCallback(Callback):
             self.model.save_weights(self.checkpoints_path + "." + str(epoch))
             print("saved ", self.checkpoints_path + "." + str(epoch))
 
-
+def DiceLoss(targets, inputs, smooth=1e-6):
+    
+    #flatten label and prediction tensors
+    inputs = K.flatten(inputs)
+    targets = K.flatten(targets)
+    
+    intersection = K.sum(K.dot(targets, inputs))
+    dice = (2*intersection + smooth) / (K.sum(targets) + K.sum(inputs) + smooth)
+    return 1 - dice
+    
 def train(model,
           train_images,
           train_annotations,
@@ -111,7 +120,7 @@ def train(model,
     if optimizer_name is not None:
 
         if ignore_zero_class:
-            loss_k = masked_categorical_crossentropy
+            loss_k = DiceLoss
         else:
             loss_k = 'categorical_crossentropy'
 
