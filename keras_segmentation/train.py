@@ -55,6 +55,11 @@ class CheckpointsCallback(Callback):
             self.model.save_weights(self.checkpoints_path + "." + str(epoch))
             print("saved ", self.checkpoints_path + "." + str(epoch))
 
+def iou(y_true, y_pred):
+    intersection = K.sum(y_true * y_pred)
+    sum_ = K.sum(y_true + y_pred)
+    jac = (intersection + smooth) / (sum_ - intersection + smooth)
+    return jac
 
 def train(model,
           train_images,
@@ -117,7 +122,7 @@ def train(model,
 
         model.compile(loss=loss_k,
                       optimizer=optimizer_name,
-                      metrics=['accuracy'])
+                      metrics=[iou])
 
     if checkpoints_path is not None:
         config_file = checkpoints_path + "_config.json"
