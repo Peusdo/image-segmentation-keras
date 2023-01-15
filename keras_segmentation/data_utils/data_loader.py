@@ -58,43 +58,7 @@ def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=True, other
     image_files = images_path
     segmentation_files = segs_path
 
-    """for dir_entry in os.listdir(images_path):
-        if os.path.isfile(os.path.join(images_path, dir_entry)) and \
-                os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
-            file_name, file_extension = os.path.splitext(dir_entry)
-            image_files.append((file_name, file_extension,
-                                os.path.join(images_path, dir_entry)))
-
-    if other_inputs_paths is not None:
-        other_inputs_files = []
-
-        for i, other_inputs_path in enumerate(other_inputs_paths):
-            temp = []
-
-            for y, dir_entry in enumerate(os.listdir(other_inputs_path)):
-                if os.path.isfile(os.path.join(other_inputs_path, dir_entry)) and \
-                        os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
-                    file_name, file_extension = os.path.splitext(dir_entry)
-
-                    temp.append((file_name, file_extension,
-                                 os.path.join(other_inputs_path, dir_entry)))
-
-            other_inputs_files.append(temp)
-
-    for dir_entry in os.listdir(segs_path):
-        if os.path.isfile(os.path.join(segs_path, dir_entry)) and \
-           os.path.splitext(dir_entry)[1] in ACCEPTABLE_SEGMENTATION_FORMATS:
-            file_name, file_extension = os.path.splitext(dir_entry)
-            full_dir_entry = os.path.join(segs_path, dir_entry)
-            if file_name in segmentation_files:
-                raise DataLoaderError("Segmentation file with filename {0}"
-                                      " already exists and is ambiguous to"
-                                      " resolve with path {1}."
-                                      " Please remove or rename the latter."
-                                      .format(file_name, full_dir_entry))
-
-            segmentation_files[file_name] = (file_extension, full_dir_entry)"""
-
+    
     return_value = []
     # Match the images and segmentations
 
