@@ -6,10 +6,12 @@ from .data_utils.data_loader import image_segmentation_generator, \
 import six
 from keras.callbacks import Callback
 from keras.callbacks import ModelCheckpoint
+from keras.layers import Flatten
 import tensorflow as tf
 import glob
 import sys
 import keras as K
+
 
 def find_latest_checkpoint(checkpoints_path, fail_safe=True):
 
@@ -59,8 +61,8 @@ class CheckpointsCallback(Callback):
 def DiceLoss(targets, inputs, smooth=1e-6):
     
     #flatten label and prediction tensors
-    inputs = K.flatten(inputs)
-    targets = K.flatten(targets)
+    inputs = Flatten(inputs)
+    targets = Flatten(targets)
     
     intersection = K.sum(K.dot(targets, inputs))
     dice = (2*intersection + smooth) / (K.sum(targets) + K.sum(inputs) + smooth)
