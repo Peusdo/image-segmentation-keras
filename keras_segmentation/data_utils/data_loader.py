@@ -41,12 +41,8 @@ class DataLoaderError(Exception):
 def get_image_list_from_path(images_path ):
    images_files = []
    for i in images_path:
-    images_files[i] = images_path[i]
-   # for dir_entry in os.listdir(images_path):
-   #         if os.path.isfile(os.path.join(images_path, dir_entry)) and \
-   #                 os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
-   #             file_name, file_extension = os.path.splitext(dir_entry)
-   #             image_files.append(os.path.join(images_path, dir_entry))
+    images_files[i] = np.array(images_path[i])
+
     return images_path
 
 
@@ -59,6 +55,7 @@ def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=True, other
     segmentation_files = segs_path
 
     return_value = []
+
 
     for i in images_path:
         return_value[i] = (images_path[i],segs_path[i])
