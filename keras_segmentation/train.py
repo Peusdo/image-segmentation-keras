@@ -11,6 +11,7 @@ import tensorflow as tf
 import glob
 import sys
 import keras.backend as K
+import numpy as np
 
 
 def find_latest_checkpoint(checkpoints_path, fail_safe=True):
@@ -67,7 +68,7 @@ def DiceLoss(y_true, y_pred, smooth=1e-6):
     y_pred = K.flatten(y_pred)
     y_true = K.flatten(y_true)
     
-    intersection = K.sum(K.dot(y_true, y_pred))    
+    intersection = np.reshape(K.sum(K.dot(y_true, y_pred))(-1,1)),  
     dice_coef = (2*intersection + smooth) / (K.sum(y_true) + K.sum(y_pred) + smooth)
     dice_loss = 1-dice_coef
     return dice_loss
