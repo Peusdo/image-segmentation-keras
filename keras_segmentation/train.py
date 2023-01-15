@@ -10,7 +10,7 @@ from keras.layers import Flatten
 import tensorflow as tf
 import glob
 import sys
-import keras as K
+import keras.backend as K
 
 
 def find_latest_checkpoint(checkpoints_path, fail_safe=True):
@@ -61,8 +61,8 @@ class CheckpointsCallback(Callback):
 def DiceLoss(targets, inputs, smooth=1e-6):
     
     #flatten label and prediction tensors
-    inputs = Flatten(inputs)
-    targets = Flatten(targets)
+    inputs = K.flatten(inputs)
+    targets = K.flatten(targets)
     
     intersection = K.sum(K.dot(targets, inputs))
     dice = (2*intersection + smooth) / (K.sum(targets) + K.sum(inputs) + smooth)
