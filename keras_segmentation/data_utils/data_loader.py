@@ -39,13 +39,13 @@ class DataLoaderError(Exception):
 
 
 def get_image_list_from_path(images_path ):
-    image_files = []
-    for dir_entry in os.listdir(images_path):
-            if os.path.isfile(os.path.join(images_path, dir_entry)) and \
-                    os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
-                file_name, file_extension = os.path.splitext(dir_entry)
-                image_files.append(os.path.join(images_path, dir_entry))
-    return image_files
+   # image_files = []
+   # for dir_entry in os.listdir(images_path):
+   #         if os.path.isfile(os.path.join(images_path, dir_entry)) and \
+   #                 os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
+   #             file_name, file_extension = os.path.splitext(dir_entry)
+   #             image_files.append(os.path.join(images_path, dir_entry))
+    return images_path
 
 
 def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=False, other_inputs_paths=None):
