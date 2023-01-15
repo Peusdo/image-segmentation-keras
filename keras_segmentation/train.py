@@ -68,7 +68,7 @@ def DiceLoss(y_true, y_pred, smooth=1e-6):
     y_pred = K.flatten(y_pred)
     y_true = K.flatten(y_true)
     
-    intersection = np.reshape(K.sum(K.dot(y_true, y_pred))(-1,1)),  
+    intersection = np.reshape(K.sum(K.dot(y_true, y_pred))(-1,2)),  
     dice_coef = (2*intersection + smooth) / (K.sum(y_true) + K.sum(y_pred) + smooth)
     dice_loss = 1-dice_coef
     return dice_loss
