@@ -53,15 +53,7 @@ def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=True, other
         the segmentation images from the segs_path directory
         while checking integrity of data """
 
-
-
-    image_files = images_path
-    segmentation_files = segs_path
-
-    
     return_value = []
-    # Match the images and segmentations
-
 
     return return_value
 
