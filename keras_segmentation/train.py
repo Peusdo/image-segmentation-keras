@@ -58,15 +58,19 @@ class CheckpointsCallback(Callback):
             self.model.save_weights(self.checkpoints_path + "." + str(epoch))
             print("saved ", self.checkpoints_path + "." + str(epoch))
 
-def DiceLoss(targets, inputs, smooth=1e-6):
+def DiceLoss(y_true, y_pred, smooth=1e-6):
+
+    y_pred = tf.convert_to_tensor(y_pred)
+    y_true = tf.cast(y_true, y_pred.dtype)
+    smooth = tf.cast(smooth, y_pred.dtype)
     
-    #flatten label and prediction tensors
-    inputs = K.flatten(inputs)
-    targets = K.flatten(targets)
+    y_pred = K.flatten(y_pred)
+    y_true = K.flatten(y_true)
     
-    intersection = K.sum(K.dot(targets, inputs))
-    dice = (2*intersection + smooth) / (K.sum(targets) + K.sum(inputs) + smooth)
-    return 1 - dice
+    intersection = K.sum(K.dot(y_true, y_pred))    
+    dice_coef = (2*intersection + smooth) / (K.sum(y_true) + K.sum(y_pred) + smooth)
+    dice_loss = 1-dice_coef
+    return dice_loss
     
 def train(model,
           train_images,
