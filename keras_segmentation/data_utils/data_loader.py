@@ -25,7 +25,7 @@ from .augmentation import augment_seg, custom_augment_seg
 DATA_LOADER_SEED = 0
 
 random.seed(DATA_LOADER_SEED)
-class_colors = [(128, 0, 0),(0,128,0),(0,0,0)]
+class_colors = [(256, 0, 0),(0,128,0),(0,0,0)]
 
 
 ACCEPTABLE_IMAGE_FORMATS = [".jpg", ".jpeg", ".png", ".bmp"]
