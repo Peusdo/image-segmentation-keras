@@ -11,7 +11,6 @@ import tensorflow as tf
 import glob
 import sys
 import keras.backend as K
-import numpy as np
 
 
 def find_latest_checkpoint(checkpoints_path, fail_safe=True):
@@ -59,19 +58,13 @@ class CheckpointsCallback(Callback):
             self.model.save_weights(self.checkpoints_path + "." + str(epoch))
             print("saved ", self.checkpoints_path + "." + str(epoch))
 
-def DiceLoss(y_true, y_pred, smooth=1e-6):
+def dice_coef(y_true, y_pred, smooth=1):
 
-    y_pred = tf.convert_to_tensor(y_pred)
-    y_true = tf.cast(y_true, y_pred.dtype)
-    smooth = tf.cast(smooth, y_pred.dtype)
-    
-    y_pred = K.flatten(y_pred)
-    y_true = K.flatten(y_true)
-    
-    intersection = np.reshape(K.sum(K.dot(y_true, y_pred))(-1,2)),  
-    dice_coef = (2*intersection + smooth) / (K.sum(y_true) + K.sum(y_pred) + smooth)
-    dice_loss = 1-dice_coef
-    return dice_loss
+    intersection = K.sum(K.abs(y_true * y_pred), axis=-1)
+    return (2. * intersection + smooth) / (K.sum(K.square(y_true),-1) + K.sum(K.square(y_pred),-1) + smooth)
+
+def dice_coef_loss(y_true, y_pred):
+    return 1-dice_coef(y_true, y_pred)
     
 def train(model,
           train_images,
@@ -128,7 +121,7 @@ def train(model,
     if optimizer_name is not None:
 
         if ignore_zero_class:
-            loss_k = DiceLoss
+            loss_k = dice_coef_loss
         else:
             loss_k = 'categorical_crossentropy'
 
