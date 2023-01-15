@@ -113,9 +113,9 @@ def train(model,
         if ignore_zero_class:
             loss_k = masked_categorical_crossentropy
         else:
-            loss_k = 'binary_crossentropy'
+            loss_k = 'categorical_crossentropy'
 
-        model.compile(loss=loss_k,
+        model.compile(loss='binary_crossentropy',
                       optimizer=optimizer_name,
                       metrics=['accuracy'])
 
