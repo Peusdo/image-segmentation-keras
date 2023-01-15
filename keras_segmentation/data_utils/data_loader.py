@@ -53,76 +53,13 @@ def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=True, other
         the segmentation images from the segs_path directory
         while checking integrity of data """
 
-    image_files = []
-    segmentation_files = {}
-
-    for dir_entry in os.listdir(images_path):
-        if os.path.isfile(os.path.join(images_path, dir_entry)) and \
-                os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
-            file_name, file_extension = os.path.splitext(dir_entry)
-            image_files.append((file_name, file_extension,
-                                os.path.join(images_path, dir_entry)))
-
-    if other_inputs_paths is not None:
-        other_inputs_files = []
-
-        for i, other_inputs_path in enumerate(other_inputs_paths):
-            temp = []
-
-            for y, dir_entry in enumerate(os.listdir(other_inputs_path)):
-                if os.path.isfile(os.path.join(other_inputs_path, dir_entry)) and \
-                        os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
-                    file_name, file_extension = os.path.splitext(dir_entry)
-
-                    temp.append((file_name, file_extension,
-                                 os.path.join(other_inputs_path, dir_entry)))
-
-            other_inputs_files.append(temp)
-
-    for dir_entry in os.listdir(segs_path):
-        if os.path.isfile(os.path.join(segs_path, dir_entry)) and \
-           os.path.splitext(dir_entry)[1] in ACCEPTABLE_SEGMENTATION_FORMATS:
-            file_name, file_extension = os.path.splitext(dir_entry)
-            full_dir_entry = os.path.join(segs_path, dir_entry)
-            if file_name in segmentation_files:
-                raise DataLoaderError("Segmentation file with filename {0}"
-                                      " already exists and is ambiguous to"
-                                      " resolve with path {1}."
-                                      " Please remove or rename the latter."
-                                      .format(file_name, full_dir_entry))
-
-            segmentation_files[file_name] = (file_extension, full_dir_entry)
+    image_files = images_path
+    segmentation_files = segs_path
 
     return_value = []
-    # Match the images and segmentations
-    for image_file, _, image_full_path in image_files:
-        if image_file in segmentation_files:
-            if other_inputs_paths is not None:
-                other_inputs = []
-                for file_paths in other_inputs_files:
-                    success = False
 
-                    for (other_file, _, other_full_path) in file_paths:
-                        if image_file == other_file:
-                            other_inputs.append(other_full_path)
-                            success = True
-                            break
-
-                    if not success:
-                        raise ValueError("There was no matching other input to", image_file, "in directory")
-
-                return_value.append((image_full_path,
-                                     segmentation_files[image_file][1], other_inputs))
-            else:
-                return_value.append((image_full_path,
-                                     segmentation_files[image_file][1]))
-        elif ignore_non_matching:
-            continue
-        else:
-            # Error out
-            raise DataLoaderError("No corresponding segmentation "
-                                  "found for image {0}."
-                                  .format(image_full_path))
+    for i in images_path:
+        return_value[i] = (images_path[i],segs_path[i])
 
     return return_value
 
