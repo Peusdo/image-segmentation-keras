@@ -121,7 +121,7 @@ def train(model,
     if optimizer_name is not None:
 
         if ignore_zero_class:
-            loss_k = dice_coef_loss
+            loss_k = masked_categorical_crossentropy
         else:
             loss_k = 'categorical_crossentropy'
 
